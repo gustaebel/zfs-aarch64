@@ -1,0 +1,55 @@
+_zfs_version="0.6.5.5"
+_kernel_version="3.14.29-10" # set kernel version in zfs.install as well!
+
+pkgname="zfs"
+pkgver=${_zfs_version}_${_kernel_version/-/_}
+pkgrel=1
+license=('GPL')
+pkgdesc="Solaris Porting Layer kernel modules and utils."
+depends=("spl" "linux=${_kernel_version}")
+makedepends=("git" "linux-headers=${_kernel_version}")
+arch=("aarch64")
+url="http://zfsonlinux.org/"
+source=(
+    "git+https://github.com/zfsonlinux/zfs.git#tag=zfs-${_zfs_version}"
+    include_param_h.diff
+)
+md5sums=(
+    'SKIP'
+    'SKIP'
+)
+install=zfs.install
+
+prepare() {
+    cd "${srcdir}/zfs"
+    patch -p1 < ../include_param_h.diff || exit 1
+}
+
+build() {
+    cd "${srcdir}/zfs"
+    ./autogen.sh
+
+    unset LDFLAGS
+    ./configure --prefix=/usr \
+                --sysconfdir=/etc \
+                --sbindir=/usr/bin \
+                --with-mounthelperdir=/usr/bin \
+                --libdir=/usr/lib \
+                --datadir=/usr/share \
+                --includedir=/usr/include \
+                --with-udevdir=/lib/udev \
+                --libexecdir=/usr/lib/zfs \
+                --with-linux=/usr/lib/modules/${_kernel_version}-ARCH/build
+
+    make
+}
+
+package() {
+    cd "${srcdir}/zfs"
+    make DESTDIR="${pkgdir}" install
+
+    cp -r "$pkgdir"/{lib,usr}
+    rm -r "$pkgdir"/lib
+
+    sed -i "s+${srcdir}++" ${pkgdir}/usr/src/zfs-*/${_kernel_version}-ARCH/Module.symvers
+}

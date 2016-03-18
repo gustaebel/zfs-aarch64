@@ -1,0 +1,36 @@
+_spl_version="0.6.5.5"
+_kernel_version="3.14.29-10" # set kernel version in spl.install as well!
+
+pkgname="spl"
+pkgver=${_spl_version}_${_kernel_version/-/_}
+pkgrel=1
+license=('GPL')
+pkgdesc="Solaris Porting Layer kernel modules and utils."
+depends=("linux=${_kernel_version}")
+makedepends=("git" "linux-odroid-c2-headers=${_kernel_version}")
+arch=("aarch64")
+url="http://zfsonlinux.org/"
+source=("git+https://github.com/zfsonlinux/spl.git#tag=spl-${_spl_version}")
+md5sums=('SKIP')
+install=spl.install
+
+build() {
+    cd "${srcdir}/spl"
+    ./autogen.sh
+
+    unset LDFLAGS # configure chokes on this otherwise.
+    ./configure --prefix=/usr \
+                --libdir=/usr/lib \
+                --sbindir=/usr/bin \
+                --with-linux=/usr/lib/modules/${_kernel_version}-ARCH/build
+
+    make
+}
+
+package() {
+    cd "${srcdir}/spl"
+    make DESTDIR="${pkgdir}" install
+
+    mv "${pkgdir}/lib" "${pkgdir}/usr/"
+    sed -i "s+${srcdir}++" ${pkgdir}/usr/src/spl-*/${_kernel_version}-ARCH/Module.symvers
+}

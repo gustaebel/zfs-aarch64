@@ -1,0 +1,17 @@
+post_install() {
+    check_initramfs
+}
+
+post_remove() {
+    check_initramfs 'remove'
+}
+
+post_upgrade() {
+    check_initramfs
+}
+
+check_initramfs() {
+    echo ">>> Updating module dependencies. Please wait ..."
+    _kernel_version="3.14.29-10"
+    depmod ${_kernel_version}-ARCH
+}
