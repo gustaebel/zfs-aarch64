@@ -13,8 +13,10 @@ url="http://zfsonlinux.org/"
 source=(
     "git+https://github.com/zfsonlinux/zfs.git#tag=zfs-${_zfs_version}"
     include_param_h.diff
+    zfs.conf
 )
 md5sums=(
+    'SKIP'
     'SKIP'
     'SKIP'
 )
@@ -52,4 +54,6 @@ package() {
     rm -r "$pkgdir"/lib
 
     sed -i "s+${srcdir}++" ${pkgdir}/usr/src/zfs-*/${_kernel_version}-ARCH/Module.symvers
+
+    install -D -t ${pkgdir}/etc/modprobe.d ../zfs.conf
 }
