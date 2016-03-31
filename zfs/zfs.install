@@ -12,6 +12,6 @@ post_upgrade() {
 
 check_initramfs() {
     echo ">>> Updating module dependencies. Please wait ..."
-    _kernel_version="3.14.29-10"
+    _kernel_version="3.14.29-15"
     depmod ${_kernel_version}-ARCH
 }

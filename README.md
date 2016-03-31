@@ -14,17 +14,17 @@ files:
 ## Installation
 
     $ cd linux-odroid-c2
-    $ makepkg
+    $ makepkg -cC
     $ pacman -U linux-odroid-c2-headers-\*.pkg.tar.xz
     $ cd ..
 
     $ cd spl
-    $ makepkg
+    $ makepkg -cC
     $ pacman -U spl-\*.pkg.tar.xz
     $ cd ..
 
     $ cd zfs
-    $ makepkg
+    $ makepkg -cC
     $ pacman -U zfs-\*.pkg.tar.xz
     $ cd ..
 

@@ -1,5 +1,5 @@
-_zfs_version="0.6.5.5"
-_kernel_version="3.14.29-10" # set kernel version in zfs.install as well!
+_zfs_version="0.6.5.6"
+_kernel_version="3.14.29-15" # set kernel version in zfs.install as well!
 
 pkgname="zfs"
 pkgver=${_zfs_version}_${_kernel_version/-/_}
