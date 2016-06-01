@@ -12,20 +12,13 @@ arch=("aarch64")
 url="http://zfsonlinux.org/"
 source=(
     "git+https://github.com/zfsonlinux/zfs.git#tag=zfs-${_zfs_version}"
-    include_param_h.diff
     zfs.conf
 )
 md5sums=(
     'SKIP'
     'SKIP'
-    'SKIP'
 )
 install=zfs.install
-
-prepare() {
-    cd "${srcdir}/zfs"
-    patch -p1 < ../include_param_h.diff || exit 1
-}
 
 build() {
     cd "${srcdir}/zfs"
