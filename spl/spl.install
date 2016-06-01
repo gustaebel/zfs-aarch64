@@ -27,6 +27,6 @@ check_hostid() {
 
 run_depmod() {
     echo ">>> Updating module dependencies. Please wait ..."
-    _kernel_version="3.14.29-15"
+    _kernel_version="3.14.65-5"
     depmod ${_kernel_version}-ARCH
 }

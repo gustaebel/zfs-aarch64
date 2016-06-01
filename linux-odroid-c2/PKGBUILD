@@ -4,12 +4,12 @@
 buildarch=8
 
 pkgbase=linux-odroid-c2
-_commit=14d4d89b5c8fe28ebb29612150be2cb49c0597ed
+_commit=8211a219ee5316a5a45cd99b83acd98ebe32606d
 _srcname=linux-${_commit}
 _kernelname=${pkgbase#linux}
 _desc="ODROID-C2"
-pkgver=3.14.29
-pkgrel=15
+pkgver=3.14.65
+pkgrel=5
 arch=('aarch64')
 url="https://github.com/hardkernel/linux/tree/odroidc2-3.14.y"
 license=('GPL2')
@@ -17,12 +17,14 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git')
 options=('!strip')
 source=("https://github.com/hardkernel/linux/archive/${_commit}.tar.gz"
         "git+https://github.com/mdrjr/c2_bootini.git"
+        '0001-add-extra-errata-843419-build-flags.patch'
         'config'
         'linux.preset'
         'amlogic.service')
-md5sums=('daefaaf6b7dfff3e2099a102602c9c63'
+md5sums=('a0279af8d96a2216d693b7b142a4ef5b'
          'SKIP'
-         '89e79470c0aa02ae0ceda0d046871262'
+         '3c4a5342ac88d86b4bf99e7d0b8b2977'
+         '28cee6ffbb83d72735362701a7d734a8'
          '85fd3026c435ffa6d7c2d7f9767b4251'
          'b8956789318f49cec5b8bb0b41654a9b')
 
@@ -36,6 +38,9 @@ prepare() {
 
   # don't run depmod on 'make install'. We'll do this ourselves in packaging
   sed -i '2iexit 0' scripts/depmod.sh
+
+  patch -p1 -i ../0001-add-extra-errata-843419-build-flags.patch
+  cp include/linux/compiler-gcc5.h include/linux/compiler-gcc6.h
 }
 
 build() {

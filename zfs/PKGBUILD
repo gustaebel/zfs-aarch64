@@ -1,12 +1,12 @@
-_zfs_version="0.6.5.6"
-_kernel_version="3.14.29-15" # set kernel version in zfs.install as well!
+_zfs_version="0.6.5.7"
+_kernel_version="3.14.65-5" # set kernel version in zfs.install as well!
 
 pkgname="zfs"
 pkgver=${_zfs_version}_${_kernel_version/-/_}
 pkgrel=1
 license=('GPL')
 pkgdesc="Solaris Porting Layer kernel modules and utils."
-depends=("spl" "linux=${_kernel_version}")
+depends=("spl" "linux-odroid-c2=${_kernel_version}")
 makedepends=("git" "linux-headers=${_kernel_version}")
 arch=("aarch64")
 url="http://zfsonlinux.org/"

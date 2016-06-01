@@ -15,7 +15,7 @@ files:
 
     $ cd linux-odroid-c2
     $ makepkg -cC
-    $ pacman -U linux-odroid-c2-headers-\*.pkg.tar.xz
+    $ pacman -Ud linux-odroid-c2-\*.pkg.tar.xz
     $ cd ..
 
     $ cd spl
