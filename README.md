@@ -1,5 +1,5 @@
-# zfs-for-aarch64
-ZFS packages for Arch Linux ARM (aarch64)
+# zfs-odroid-c2
+ZFS packages for the ODROID-C2 running Archlinux ARM.
 
 ## Installation
 
