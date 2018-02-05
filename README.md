@@ -5,12 +5,12 @@ ZFS packages for the ODROID-C2 running Archlinux ARM.
 
     $ cd spl
     $ makepkg -C [-c]
-    $ pacman -U spl-\*.pkg.tar.xz
+    $ sudo pacman -U spl-<version>.pkg.tar.xz
     $ cd ..
 
     $ cd zfs
     $ makepkg -C [-c]
-    $ pacman -U zfs-\*.pkg.tar.xz
+    $ sudo pacman -U zfs-<version>.pkg.tar.xz
     $ cd ..
 
 ## License
