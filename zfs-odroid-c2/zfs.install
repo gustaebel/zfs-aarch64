@@ -1,0 +1,17 @@
+post_install() {
+    check_initramfs
+}
+
+post_remove() {
+    check_initramfs 'remove'
+}
+
+post_upgrade() {
+    check_initramfs
+}
+
+check_initramfs() {
+    echo ">>> Updating module dependencies. Please wait ..."
+    _KV_=3.14.79-28
+    depmod $_KV_-ARCH
+}

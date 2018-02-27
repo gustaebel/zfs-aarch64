@@ -1,8 +1,8 @@
 _spl_version="0.7.6"
-_kernel_version="3.14.79-28" # set kernel version in spl.install as well!
+_kernel_version="3.14.79-28"
 
-pkgname="spl"
-pkgver=${_spl_version}_${_kernel_version/-/_}
+pkgname="spl-odroid-c2"
+pkgver=${_spl_version}
 pkgrel=1
 license=('GPL')
 pkgdesc="Solaris Porting Layer kernel modules and utils."
@@ -13,6 +13,10 @@ url="http://zfsonlinux.org/"
 source=("git+https://github.com/zfsonlinux/spl.git#tag=spl-${_spl_version}")
 md5sums=('SKIP')
 install=spl.install
+
+prepare() {
+    sed -i "s/_KV_=.*/_KV_=${_kernel_version}/" ${startdir}/spl.install
+}
 
 build() {
     cd "${srcdir}/spl"

@@ -1,17 +1,28 @@
-# zfs-odroid-c2
-ZFS packages for the ODROID-C2 running Archlinux ARM.
+# zfs-aarch64
+ZFS packages for Archlinux ARM (aarch64 architecture)
 
-## Installation
+## About
 
-    $ cd spl
-    $ makepkg -C [-c]
-    $ sudo pacman -U spl-<version>.pkg.tar.xz
-    $ cd ..
+This repository provides Archlinux PKGBUILDs for spl and zfs on the aarch64
+architecture.
 
-    $ cd zfs
-    $ makepkg -C [-c]
-    $ sudo pacman -U zfs-<version>.pkg.tar.xz
-    $ cd ..
+The odroid-c2 packages are only usable on ODROID-C2 devices which use the
+manufacturer's custom kernel.
+
+The aarch64 packages can be used on an Archlinux system with a recent kernel,
+e.g. the Raspberry Pi 3 image.
+
+## Package repository
+
+Add this to your /etc/pacman.conf:
+
+    [zfs-aarch64]
+    Server = https://autofail.de/$repo/$arch
+
+## See also
+
+* https://archlinuxarm.org/
+* The makepkg and pacman manpages.
 
 ## License
 

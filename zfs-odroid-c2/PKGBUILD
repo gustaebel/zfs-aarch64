@@ -1,13 +1,13 @@
 _zfs_version="0.7.6"
-_kernel_version="3.14.79-28" # set kernel version in zfs.install as well!
+_kernel_version="3.14.79-28"
 
-pkgname="zfs"
-pkgver=${_zfs_version}_${_kernel_version/-/_}
+pkgname="zfs-odroid-c2"
+pkgver=${_zfs_version}
 pkgrel=1
 license=('GPL')
 pkgdesc="Solaris Porting Layer kernel modules and utils."
-depends=("spl" "linux-odroid-c2=${_kernel_version}")
-makedepends=("git" "linux-headers=${_kernel_version}")
+depends=("spl-odroid-c2" "linux-odroid-c2=${_kernel_version}")
+makedepends=("git" "linux-odroid-c2-headers=${_kernel_version}")
 arch=("aarch64")
 url="http://zfsonlinux.org/"
 source=(
@@ -19,6 +19,10 @@ md5sums=(
     'SKIP'
 )
 install=zfs.install
+
+prepare() {
+    sed -i "s/_KV_=.*/_KV_=${_kernel_version}/" ${startdir}/zfs.install
+}
 
 build() {
     cd "${srcdir}/zfs"
