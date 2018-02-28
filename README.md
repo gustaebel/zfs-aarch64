@@ -3,8 +3,8 @@ ZFS packages for Archlinux ARM (aarch64 architecture)
 
 ## About
 
-This repository provides Archlinux PKGBUILDs for spl and zfs on the aarch64
-architecture.
+This repository provides Archlinux PKGBUILDs for zfs on the aarch64
+architecture. Both spl and zfs modules are built into a single package.
 
 The odroid-c2 packages are only usable on ODROID-C2 devices which use the
 manufacturer's custom kernel.

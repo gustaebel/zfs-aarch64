@@ -5,16 +5,18 @@ pkgname="zfs-aarch64"
 pkgver=${_zfs_version}
 pkgrel=1
 license=('GPL')
-pkgdesc="Solaris Porting Layer kernel modules and utils."
-depends=("spl-aarch64" "linux-aarch64=${_kernel_version}")
+pkgdesc="ZFS kernel modules and utils."
+depends=("linux-aarch64=${_kernel_version}")
 makedepends=("git" "linux-aarch64-headers=${_kernel_version}")
 arch=("aarch64")
 url="http://zfsonlinux.org/"
 source=(
+    "git+https://github.com/zfsonlinux/spl.git#tag=spl-${_zfs_version}"
     "git+https://github.com/zfsonlinux/zfs.git#tag=zfs-${_zfs_version}"
     zfs.conf
 )
 md5sums=(
+    'SKIP'
     'SKIP'
     'SKIP'
 )
@@ -25,10 +27,19 @@ prepare() {
 }
 
 build() {
+    cd "${srcdir}/spl"
+    ./autogen.sh
+    unset LDFLAGS # configure chokes on this otherwise.
+    ./configure --prefix=/usr \
+                --libdir=/usr/lib \
+                --sbindir=/usr/bin \
+                --with-linux=/usr/lib/modules/${_kernel_version}-ARCH/build \
+                --with-linux-obj=/usr/lib/modules/${_kernel_version}-ARCH/build
+    make ${MAKEFLAGS}
+
     cd "${srcdir}/zfs"
     ./autogen.sh
-
-    unset LDFLAGS
+    #unset LDFLAGS
     ./configure --prefix=/usr \
                 --sysconfdir=/etc \
                 --sbindir=/usr/bin \
@@ -38,19 +49,30 @@ build() {
                 --includedir=/usr/include \
                 --with-udevdir=/lib/udev \
                 --libexecdir=/usr/lib/zfs \
-                --with-linux=/usr/lib/modules/${_kernel_version}-ARCH/build
-
-    make
+                --with-spl=${srcdir}/spl \
+                --with-linux=/usr/lib/modules/${_kernel_version}-ARCH/build \
+                --with-linux-obj=/usr/lib/modules/${_kernel_version}-ARCH/build
+    make ${MAKEFLAGS}
 }
 
 package() {
+    cd "${srcdir}/spl"
+    make DESTDIR="${pkgdir}" install
+
     cd "${srcdir}/zfs"
     make DESTDIR="${pkgdir}" install
 
+    install -D -t ${pkgdir}/etc/modprobe.d ../zfs.conf
+
+    # Move /lib to /usr/lib.
     cp -r "$pkgdir"/{lib,usr}
     rm -r "$pkgdir"/lib
 
-    sed -i "s+${srcdir}++" ${pkgdir}/usr/src/zfs-*/${_kernel_version}-ARCH/Module.symvers
+    # Fix permissions.
+    chmod 750 "${pkgdir}/etc/sudoers.d"
 
-    install -D -t ${pkgdir}/etc/modprobe.d ../zfs.conf
+    # Remove unneeded files.
+    rm -r "${pkgdir}/usr/src"
+    rm -r "${pkgdir}/usr/lib/dracut"
+    rm -r "${pkgdir}/usr/share/zfs/zfs-tests"
 }
