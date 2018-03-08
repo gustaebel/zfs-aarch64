@@ -1,5 +1,5 @@
 _zfs_version="0.7.6"
-_kernel_version="4.15.6-1"
+_kernel_version="4.15.7-1"
 
 pkgname="zfs-aarch64"
 pkgver=${_zfs_version}
