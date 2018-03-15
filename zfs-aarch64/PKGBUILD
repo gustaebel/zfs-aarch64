@@ -1,9 +1,9 @@
-_zfs_version="0.7.6"
-_kernel_version="4.15.7-1"
-
 pkgname="zfs-aarch64"
 pkgver=${_zfs_version}
-pkgrel=2
+pkgrel=3
+_zfs_version="0.7.6"
+_kernel_version="4.15.9-1"
+
 license=('GPL')
 pkgdesc="ZFS kernel modules and utils."
 depends=("linux-aarch64=${_kernel_version}")
