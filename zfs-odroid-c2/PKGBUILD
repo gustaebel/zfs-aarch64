@@ -1,7 +1,6 @@
 pkgname="zfs-odroid-c2"
-pkgver=${_zfs_version}
+pkgver="0.7.6"
 pkgrel=2
-_zfs_version="0.7.6"
 _kernel_version="3.14.79-28"
 
 license=('GPL')
@@ -11,8 +10,8 @@ makedepends=("git" "linux-odroid-c2-headers=${_kernel_version}")
 arch=("aarch64")
 url="http://zfsonlinux.org/"
 source=(
-    "git+https://github.com/zfsonlinux/spl.git#tag=spl-${_zfs_version}"
-    "git+https://github.com/zfsonlinux/zfs.git#tag=zfs-${_zfs_version}"
+    "git+https://github.com/zfsonlinux/spl.git#tag=spl-${pkgver}"
+    "git+https://github.com/zfsonlinux/zfs.git#tag=zfs-${pkgver}"
     zfs.conf
 )
 md5sums=(
