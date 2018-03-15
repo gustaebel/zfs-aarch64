@@ -1,9 +1,9 @@
-_zfs_version="0.7.6"
-_kernel_version="3.14.79-28"
-
 pkgname="zfs-odroid-c2"
 pkgver=${_zfs_version}
 pkgrel=2
+_zfs_version="0.7.6"
+_kernel_version="3.14.79-28"
+
 license=('GPL')
 pkgdesc="ZFS kernel modules and utils."
 depends=("linux-odroid-c2=${_kernel_version}")
