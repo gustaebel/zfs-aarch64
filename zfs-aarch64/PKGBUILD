@@ -1,7 +1,7 @@
 pkgname="zfs-aarch64"
-pkgver="0.7.6"
-pkgrel=3
-_kernel_version="4.15.9-1"
+pkgver="0.7.7"
+pkgrel=1
+_kernel_version="4.15.11-1"
 
 license=('GPL')
 pkgdesc="ZFS kernel modules and utils."
