@@ -1,6 +1,6 @@
 pkgname="zfs-aarch64"
-pkgver="0.7.7"
-pkgrel=2
+pkgver="0.7.8"
+pkgrel=1
 _kernel_version="4.15.12-1"
 
 license=('GPL')
@@ -26,6 +26,8 @@ prepare() {
 }
 
 build() {
+    set | less
+
     cd "${srcdir}/spl"
     ./autogen.sh
     unset LDFLAGS # configure chokes on this otherwise.

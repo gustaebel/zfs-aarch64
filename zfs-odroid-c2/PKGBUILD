@@ -1,5 +1,5 @@
 pkgname="zfs-odroid-c2"
-pkgver="0.7.7"
+pkgver="0.7.8"
 pkgrel=1
 _kernel_version="3.14.79-28"
 
